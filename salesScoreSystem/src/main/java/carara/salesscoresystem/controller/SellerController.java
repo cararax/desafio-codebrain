@@ -20,6 +20,15 @@ public class SellerController {
         this.sellerService = sellerService;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> findById(@PathVariable Long id) {
+        Optional<Seller> seller = sellerService.findById(id);
+        if (seller.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Seller not found.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(seller.get());
+    }
+
     @PostMapping
     public ResponseEntity<Seller> insertSeller(@RequestBody Seller seller) {
         return ResponseEntity.status(HttpStatus.CREATED).body(sellerService.insertSeller(seller));
