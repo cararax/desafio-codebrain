@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/desafio-codebrain.iml" filepath="$PROJECT_DIR$/.idea/desafio-codebrain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/salesScoreSystem/salesScoreSystem.iml" filepath="$PROJECT_DIR$/salesScoreSystem/salesScoreSystem.iml" />
     </modules>
   </component>
 </project>
