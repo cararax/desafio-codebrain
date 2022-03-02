@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 public class SellerService {
@@ -21,5 +22,15 @@ public class SellerService {
         Seller newSeller = new Seller();
         BeanUtils.copyProperties(seller, newSeller);
         return sellerRepository.save(newSeller);
+    }
+
+    @Transactional
+    public void deleteSeller(Seller seller) {
+        sellerRepository.delete(seller);
+
+    }
+
+    public Optional<Seller> findById(Long id) {
+        return sellerRepository.findById(id);
     }
 }
