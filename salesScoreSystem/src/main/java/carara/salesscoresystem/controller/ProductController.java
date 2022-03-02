@@ -1,7 +1,9 @@
 package carara.salesscoresystem.controller;
 
+import carara.salesscoresystem.dto.ProductDto;
 import carara.salesscoresystem.model.Product;
 import carara.salesscoresystem.service.ProductService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,18 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<Product> insertProduct(@RequestBody Product product) {
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.insertProduct(product));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateProduct(@PathVariable Long id, @RequestBody ProductDto productDto) {
+        Optional<Product> productToUpdate = productService.findById(id);
+        if (productToUpdate.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found.");
+        }
+        Product product = productToUpdate.get();
+        BeanUtils.copyProperties(productDto, product);
+        product.setId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(productService.insertProduct(product));
     }
 
     @DeleteMapping("/{id}")
