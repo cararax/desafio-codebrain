@@ -1,6 +1,5 @@
 package carara.salesscoresystem.controller;
 
-import carara.salesscoresystem.dto.ProductDto;
 import carara.salesscoresystem.model.Product;
 import carara.salesscoresystem.service.ProductService;
 import org.springframework.http.HttpStatus;
@@ -20,8 +19,8 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> insertProduct(@RequestBody ProductDto productDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(productService.insertProduct(productDto));
+    public ResponseEntity<Product> insertProduct(@RequestBody Product product) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(productService.insertProduct(product));
     }
 
     @DeleteMapping("/{id}")

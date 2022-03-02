@@ -1,6 +1,5 @@
 package carara.salesscoresystem.service;
 
-import carara.salesscoresystem.dto.ProductDto;
 import carara.salesscoresystem.model.Product;
 import carara.salesscoresystem.repository.ProductRepository;
 import org.springframework.beans.BeanUtils;
@@ -19,9 +18,9 @@ public class ProductService {
     }
 
     @Transactional
-    public Product insertProduct(ProductDto productDto) {
+    public Product insertProduct(Product product) {
         Product newProduct = new Product();
-        BeanUtils.copyProperties(productDto, newProduct);
+        BeanUtils.copyProperties(product, newProduct);
         return productRepository.save(newProduct);
     }
 
