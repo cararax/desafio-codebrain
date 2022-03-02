@@ -10,25 +10,23 @@
 
  **Nesse sistema, é possível:**
 
-- [ ]  Cadastrar, alterar, deletar e buscar vendedores
+- [x]  Cadastrar, alterar, deletar e buscar vendedores
 
-  - [ ] Um vendedor é composto por um nome e matrícula
+    - [x] Um vendedor é composto por um nome e matrícula
 
-  - [ ] Apenas a busca por matrícula é necessária
+    - [x] Apenas a busca por matrícula é necessária
 
-    
 
-- [ ] Cadastrar, alterar, deletar produto
+- [x] Cadastrar, alterar, deletar produto
 
-  - [ ] Um produto é composto por nome e preço
+    - [x] Um produto é composto por nome e preço
 
-  - [ ] Não é necessária busca por produto
+    - [x] Não é necessária busca por produto
 
-    
 
 - [ ] Cadastrar de venda
 
-  - [ ] Uma venda é definida por um vendedor, 1 ou mais itens e o valor total
+    - [ ] Uma venda é definida por um vendedor, 1 ou mais itens e o valor total
 
     
 
