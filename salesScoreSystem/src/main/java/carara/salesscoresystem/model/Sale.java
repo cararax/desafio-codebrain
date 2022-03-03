@@ -30,5 +30,13 @@ public class Sale {
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> products = new ArrayList<>();
 
+    private Double totalAmount = null;
 
+    public Double calculateTotalAmount(List<Product> products) {
+        Double total = 0.0;
+        for (Product product : products) {
+            total += product.getPrice();
+        }
+        return total;
+    }
 }

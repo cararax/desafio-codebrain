@@ -14,9 +14,9 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class SaleDto implements Serializable {
-    private static final long serialVersionUID = 1L;
 
     private Seller seller;
     private List<Product> products = new ArrayList<>();
+    private Double totalAmount;
 
 }
