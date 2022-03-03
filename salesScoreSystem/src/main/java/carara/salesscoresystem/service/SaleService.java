@@ -45,6 +45,7 @@ public class SaleService {
         }
 
         Sale sale = new Sale();
+        saleDto.setTotalAmount(sale.calculateTotalAmount(saleDto.getProducts()));
         BeanUtils.copyProperties(saleDto, sale);
 //        saleRepository.save(sale);
         BeanUtils.copyProperties(saleRepository.save(sale), saleDto);
