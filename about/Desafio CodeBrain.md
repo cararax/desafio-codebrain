@@ -19,26 +19,21 @@
 
 - [x] Cadastrar, alterar, deletar produto
 
-    - [x] Um produto é composto por nome e preço
+    - [] Um produto é composto por nome e preço
 
     - [x] Não é necessária busca por produto
 
 
-- [ ] Cadastrar de venda
+- [x] Cadastrar de venda
 
-    - [ ] Uma venda é definida por um vendedor, 1 ou mais itens e o valor total
+    - [x] Uma venda é definida por um vendedor, 1 ou mais itens e o valor total
 
-    
 
 - [ ] Lista dos vendedores por maior número de vendas (API)
 
-  
+**Opcional:**
 
-**Opcional:** 
-
-- [ ] Fornecer o ticket médio de venda de um vendedor por intervalo de tempo 
-
-  
+- [ ] Fornecer o ticket médio de venda de um vendedor por intervalo de tempo
 
 ### Requisitos não funcionais 
 
