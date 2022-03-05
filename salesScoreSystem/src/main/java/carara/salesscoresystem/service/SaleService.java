@@ -4,6 +4,7 @@ import carara.salesscoresystem.dto.SaleDto;
 import carara.salesscoresystem.model.Product;
 import carara.salesscoresystem.model.Sale;
 import carara.salesscoresystem.model.Seller;
+import carara.salesscoresystem.projection.SalesAmountBySeller;
 import carara.salesscoresystem.repository.ProductRepository;
 import carara.salesscoresystem.repository.SaleRepository;
 import carara.salesscoresystem.repository.SellerRepository;
@@ -47,8 +48,11 @@ public class SaleService {
         Sale sale = new Sale();
         saleDto.setTotalAmount(sale.calculateTotalAmount(saleDto.getProducts()));
         BeanUtils.copyProperties(saleDto, sale);
-//        saleRepository.save(sale);
         BeanUtils.copyProperties(saleRepository.save(sale), saleDto);
         return saleDto;
+    }
+
+    public List<SalesAmountBySeller> getSalesAmountBySeller() {
+        return saleRepository.countSalesBySeller();
     }
 }
