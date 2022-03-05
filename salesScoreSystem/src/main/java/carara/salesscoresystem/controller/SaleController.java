@@ -24,7 +24,7 @@ public class SaleController {
         return ResponseEntity.status(HttpStatus.CREATED).body(saleService.insertSale(saleDto));
     }
 
-    @GetMapping
+    @GetMapping("/sales-by-seller")
     public ResponseEntity<List<SalesAmountBySeller>> getSalesAmountBySeller() {
         return ResponseEntity.status(HttpStatus.OK).body(saleService.getSalesAmountBySeller());
     }
