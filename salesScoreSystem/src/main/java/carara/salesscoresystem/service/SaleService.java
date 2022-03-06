@@ -5,6 +5,7 @@ import carara.salesscoresystem.model.Product;
 import carara.salesscoresystem.model.Sale;
 import carara.salesscoresystem.model.Seller;
 import carara.salesscoresystem.projection.SalesAmountBySeller;
+import carara.salesscoresystem.projection.SalesTicket;
 import carara.salesscoresystem.repository.ProductRepository;
 import carara.salesscoresystem.repository.SaleRepository;
 import carara.salesscoresystem.repository.SellerRepository;
@@ -54,5 +55,9 @@ public class SaleService {
 
     public List<SalesAmountBySeller> getSalesAmountBySeller() {
         return saleRepository.countSalesBySeller();
+    }
+
+    public SalesTicket getSalesTicketBySeller(Long sellerId) {
+        return saleRepository.salesTicketBySeller(sellerId);
     }
 }
