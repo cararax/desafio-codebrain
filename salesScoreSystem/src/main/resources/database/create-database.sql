@@ -2,7 +2,7 @@ create sequence hibernate_sequence;
 
 alter sequence hibernate_sequence owner to postgres;
 
-create table product
+create table if not exists product
 (
     id    bigint not null
         primary key,
@@ -13,7 +13,7 @@ create table product
 alter table product
     owner to postgres;
 
-create table seller
+create table if not exists seller
 (
     id   bigint not null
         primary key,
@@ -23,10 +23,11 @@ create table seller
 alter table seller
     owner to postgres;
 
-create table sale
+create table if not exists sale
 (
     id           bigint not null
         primary key,
+    local_date   date,
     total_amount double precision,
     seller_id    bigint not null
         constraint fkqo5yb2opubvktdxvya06qctjs
@@ -36,7 +37,7 @@ create table sale
 alter table sale
     owner to postgres;
 
-create table sale_products
+create table if not exists sale_products
 (
     sale_id    bigint not null
         constraint fk4kyjb6xkhu1h3ooi1eyjh9jcp
