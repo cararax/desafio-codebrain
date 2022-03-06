@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class SaleDto implements Serializable {
 
     private Seller seller;
     private List<Product> products = new ArrayList<>();
+    private LocalDate localDate;
     private Double totalAmount;
 
 }

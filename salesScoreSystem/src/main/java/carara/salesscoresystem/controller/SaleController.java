@@ -1,6 +1,7 @@
 package carara.salesscoresystem.controller;
 
 import carara.salesscoresystem.dto.SaleDto;
+import carara.salesscoresystem.dto.TimeIntervalDto;
 import carara.salesscoresystem.projection.SalesAmountBySeller;
 import carara.salesscoresystem.projection.SalesTicket;
 import carara.salesscoresystem.service.SaleService;
@@ -31,8 +32,8 @@ public class SaleController {
     }
 
     @GetMapping("/sales-ticket/{sellerId}")
-    public SalesTicket getSalesTicketBySeller(@PathVariable Long sellerId) {
-        return saleService.getSalesTicketBySeller(sellerId);
+    public SalesTicket getSalesTicketBySeller(@PathVariable Long sellerId, @RequestBody TimeIntervalDto timeIntervalDto) {
+        return saleService.getSalesTicketBySeller(sellerId, timeIntervalDto);
     }
 
 }

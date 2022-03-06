@@ -1,6 +1,7 @@
 package carara.salesscoresystem.service;
 
 import carara.salesscoresystem.dto.SaleDto;
+import carara.salesscoresystem.dto.TimeIntervalDto;
 import carara.salesscoresystem.model.Product;
 import carara.salesscoresystem.model.Sale;
 import carara.salesscoresystem.model.Seller;
@@ -13,6 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -45,6 +47,7 @@ public class SaleService {
                 saleDto.getProducts().add(productOptional.get());
             }
         }
+        saleDto.setLocalDate(LocalDate.now());
 
         Sale sale = new Sale();
         saleDto.setTotalAmount(sale.calculateTotalAmount(saleDto.getProducts()));
@@ -57,7 +60,9 @@ public class SaleService {
         return saleRepository.countSalesBySeller();
     }
 
-    public SalesTicket getSalesTicketBySeller(Long sellerId) {
-        return saleRepository.salesTicketBySeller(sellerId);
+    public SalesTicket getSalesTicketBySeller(Long sellerId, TimeIntervalDto timeIntervalDto) {
+        LocalDate startDate = timeIntervalDto.getStartDate();
+        LocalDate endDate = timeIntervalDto.getEndDate();
+        return saleRepository.salesTicketBySeller(sellerId, startDate, endDate);
     }
 }
