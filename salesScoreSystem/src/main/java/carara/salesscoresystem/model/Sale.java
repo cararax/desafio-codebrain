@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,16 +26,18 @@ public class Sale {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "seller_id", nullable = false)
+    @NotNull
     private Seller seller;
 
     @ManyToMany
     @JoinTable(name = "sale_products",
             joinColumns = @JoinColumn(name = "sale_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
+    @NotEmpty
     private List<Product> products = new ArrayList<>();
-
+    @NotNull
     private LocalDate localDate;
-
+    @Positive
     private Double totalAmount = null;
 
     public Double calculateTotalAmount(List<Product> products) {

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -30,12 +31,12 @@ public class SellerController {
     }
 
     @PostMapping
-    public ResponseEntity<Seller> insertSeller(@RequestBody Seller seller) {
+    public ResponseEntity<Seller> insertSeller(@Valid @RequestBody Seller seller) {
         return ResponseEntity.status(HttpStatus.CREATED).body(sellerService.insertSeller(seller));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateSeller(@PathVariable Long id, @RequestBody ProductDto productDto) {
+    public ResponseEntity<Object> updateSeller(@PathVariable Long id, @Valid @RequestBody ProductDto productDto) {
         Optional<Seller> productToUpdate = sellerService.findById(id);
         if (productToUpdate.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Seller not found.");

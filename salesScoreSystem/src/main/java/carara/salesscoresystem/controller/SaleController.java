@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,7 +23,7 @@ public class SaleController {
     }
 
     @PostMapping
-    public ResponseEntity<SaleDto> insertSale(@RequestBody SaleDto saleDto) {
+    public ResponseEntity<SaleDto> insertSale(@Valid @RequestBody SaleDto saleDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(saleService.insertSale(saleDto));
     }
 
