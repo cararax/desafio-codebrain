@@ -19,7 +19,7 @@
 
 - [x] Cadastrar, alterar, deletar produto
 
-    - [] Um produto é composto por nome e preço
+    - [x] Um produto é composto por nome e preço
 
     - [x] Não é necessária busca por produto
 
@@ -29,17 +29,17 @@
     - [x] Uma venda é definida por um vendedor, 1 ou mais itens e o valor total
 
 
-- [ ] Lista dos vendedores por maior número de vendas (API)
+- [x] Lista dos vendedores por maior número de vendas (API)
 
 **Opcional:**
 
-- [ ] Fornecer o ticket médio de venda de um vendedor por intervalo de tempo
+- [x] Fornecer o ticket médio de venda de um vendedor por intervalo de tempo
 
-### Requisitos não funcionais 
+### Requisitos não funcionais
 
-- [ ] Deve conter scripts para criação do banco caso a aplicação não crie as tabelas  automaticamente.
+- [x] Deve conter scripts para criação do banco caso a aplicação não crie as tabelas automaticamente.
 
-- [ ] Deve conter as instruções para subir um container docker com o(s) banco(s)  escolhido(s).
+- [ ] Deve conter as instruções para subir um container docker com o(s) banco(s) escolhido(s).
 
   
 
