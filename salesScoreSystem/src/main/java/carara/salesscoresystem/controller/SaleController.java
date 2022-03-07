@@ -2,6 +2,7 @@ package carara.salesscoresystem.controller;
 
 import carara.salesscoresystem.dto.SaleDto;
 import carara.salesscoresystem.dto.TimeIntervalDto;
+import carara.salesscoresystem.model.Sale;
 import carara.salesscoresystem.projection.SalesAmountBySeller;
 import carara.salesscoresystem.projection.SalesTicket;
 import carara.salesscoresystem.service.SaleService;
@@ -23,18 +24,18 @@ public class SaleController {
     }
 
     @PostMapping
-    public ResponseEntity<SaleDto> insertSale(@Valid @RequestBody SaleDto saleDto) {
+    public ResponseEntity<Sale> insertSale(@Valid @RequestBody SaleDto saleDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(saleService.insertSale(saleDto));
     }
 
     @GetMapping("/sales-by-seller")
-    public ResponseEntity<List<SalesAmountBySeller>> getSalesAmountBySeller() {
-        return ResponseEntity.status(HttpStatus.OK).body(saleService.getSalesAmountBySeller());
+    public ResponseEntity<List<SalesAmountBySeller>> getSalesAmountBySellers() {
+        return ResponseEntity.status(HttpStatus.OK).body(saleService.getSalesAmountBySellers());
     }
 
     @GetMapping("/sales-ticket/{sellerId}")
-    public SalesTicket getSalesTicketBySeller(@PathVariable Long sellerId, @RequestBody TimeIntervalDto timeIntervalDto) {
-        return saleService.getSalesTicketBySeller(sellerId, timeIntervalDto);
+    public ResponseEntity<SalesTicket> getSalesTicketBySeller(@PathVariable Long sellerId, @RequestBody TimeIntervalDto timeIntervalDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(saleService.getSalesTicketBySeller(sellerId, timeIntervalDto));
     }
 
 }

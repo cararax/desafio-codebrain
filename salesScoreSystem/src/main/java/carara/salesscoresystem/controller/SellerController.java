@@ -1,16 +1,13 @@
 package carara.salesscoresystem.controller;
 
-import carara.salesscoresystem.dto.ProductDto;
-import carara.salesscoresystem.exception.EntityNotFoundException;
+import carara.salesscoresystem.dto.SellerDto;
 import carara.salesscoresystem.model.Seller;
 import carara.salesscoresystem.service.SellerService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/sellers")
@@ -22,39 +19,23 @@ public class SellerController {
         this.sellerService = sellerService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> findById(@PathVariable Long id) {
-        Optional<Seller> seller = sellerService.findById(id);
-        if (seller.isEmpty()) {
-            throw new EntityNotFoundException("Seller with id  " + id + " was not found.");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(seller.get());
+    @GetMapping("/{sellerId}")
+    public ResponseEntity<Object> findById(@PathVariable Long sellerId) {
+        return ResponseEntity.status(HttpStatus.OK).body(sellerService.findById(sellerId));
     }
 
     @PostMapping
-    public ResponseEntity<Seller> insertSeller(@Valid @RequestBody Seller seller) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(sellerService.insertSeller(seller));
+    public ResponseEntity<Seller> insertSeller(@Valid @RequestBody SellerDto sellerDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(sellerService.insertSeller(sellerDto));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateSeller(@PathVariable Long id, @Valid @RequestBody ProductDto productDto) {
-        Optional<Seller> productToUpdate = sellerService.findById(id);
-        if (productToUpdate.isEmpty()) {
-            throw new EntityNotFoundException("Seller with id  " + id + " was not found.");
-        }
-        Seller seller = productToUpdate.get();
-        BeanUtils.copyProperties(productDto, seller);
-        seller.setId(id);
-        return ResponseEntity.status(HttpStatus.OK).body(sellerService.insertSeller(seller));
+    @PutMapping("/{sellerId}")
+    public ResponseEntity<Object> updateSeller(@PathVariable Long sellerId, @Valid @RequestBody SellerDto sellerDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(sellerService.updateSeller(sellerId, sellerDto));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
-        Optional<Seller> productToDelete = sellerService.findById(id);
-        if (productToDelete.isEmpty()) {
-            throw new EntityNotFoundException("Seller with id  " + id + " was not found.");
-        }
-        sellerService.deleteSeller(productToDelete.get());
-        return ResponseEntity.status(HttpStatus.OK).body("Seller deleted successfully.");
+    @DeleteMapping("/{sellerId}")
+    public ResponseEntity<String> deleteProduct(@PathVariable Long sellerId) {
+        return ResponseEntity.status(HttpStatus.OK).body(sellerService.deleteSeller(sellerId));
     }
 }

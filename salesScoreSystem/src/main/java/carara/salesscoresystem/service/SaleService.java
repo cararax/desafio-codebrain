@@ -12,7 +12,6 @@ import carara.salesscoresystem.projection.SalesTicket;
 import carara.salesscoresystem.repository.ProductRepository;
 import carara.salesscoresystem.repository.SaleRepository;
 import carara.salesscoresystem.repository.SellerRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -28,48 +27,44 @@ public class SaleService {
     public final ProductRepository productRepository;
     public final SellerRepository sellerRepository;
 
-    public SaleService(SaleRepository saleRepository, ProductRepository productRepository, SellerRepository sellerRepository) {
+    public final SellerService sellerService;
+    public final ProductService productService;
+
+    public SaleService(SaleRepository saleRepository, ProductRepository productRepository, SellerRepository sellerRepository, SellerService sellerService, ProductService productService) {
         this.saleRepository = saleRepository;
         this.productRepository = productRepository;
         this.sellerRepository = sellerRepository;
+        this.sellerService = sellerService;
+        this.productService = productService;
     }
 
     @Transactional
-    public SaleDto insertSale(SaleDto saleDto) {
+    public Sale insertSale(SaleDto saleDto) {
         if (saleDto.getSellerId() == null) {
             throw new BusinessRuleException("It is not allowed to register a sale without a seller.");
         }
-
-        Optional<Seller> seller = sellerRepository.findById(saleDto.getSellerId());
-        if (seller.isEmpty()) {
-            throw new EntityNotFoundException("Seller with id  " + saleDto.getSellerId() + " was not found.");
-        }
-        Sale sale = new Sale();
-        sale.setSeller(seller.get());
-
         if (saleDto.getProductId().isEmpty()) {
             throw new BusinessRuleException("It is not allowed to register a sale without products");
         }
-        List<Long> productList = new ArrayList<>(saleDto.getProductId());
-//        saleDto.getProducts().clear();
-        for (Long productId : productList) {
-            Optional<Product> productOptional = productRepository.findById(productId);
-            if (productOptional.isEmpty()) {
-                throw new EntityNotFoundException("Product with id  " + productId + " was not found.");
-            }
-            sale.getProducts().add(productOptional.get());
-        }
-
+        Sale sale = new Sale();
+        Seller seller = sellerService.findById(saleDto.getSellerId());
+        sale.setSeller(seller);
+        populateProducts(saleDto, sale);
         sale.setLocalDate(LocalDate.now());
-
         sale.setTotalAmount(sale.calculateTotalAmount(sale.getProducts()));
-//        BeanUtils.copyProperties(saleDto, sale);
-        BeanUtils.copyProperties(saleRepository.save(sale), saleDto);
-        return saleDto;
+        return saleRepository.save(sale);
     }
 
-    public List<SalesAmountBySeller> getSalesAmountBySeller() {
-        return saleRepository.countSalesBySeller();
+    private void populateProducts(SaleDto saleDto, Sale sale) {
+        List<Long> productList = new ArrayList<>(saleDto.getProductId());
+        for (Long productId : productList) {
+            Product product = productService.findById(productId);
+            sale.getProducts().add(product);
+        }
+    }
+
+    public List<SalesAmountBySeller> getSalesAmountBySellers() {
+        return saleRepository.countSalesBySellers();
     }
 
     public SalesTicket getSalesTicketBySeller(Long sellerId, TimeIntervalDto timeIntervalDto) {

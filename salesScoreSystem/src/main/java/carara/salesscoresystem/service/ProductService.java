@@ -1,5 +1,7 @@
 package carara.salesscoresystem.service;
 
+import carara.salesscoresystem.dto.ProductDto;
+import carara.salesscoresystem.exception.EntityNotFoundException;
 import carara.salesscoresystem.model.Product;
 import carara.salesscoresystem.repository.ProductRepository;
 import org.springframework.beans.BeanUtils;
@@ -18,19 +20,31 @@ public class ProductService {
     }
 
     @Transactional
-    public Product insertProduct(Product product) {
-        Product newProduct = new Product();
-        BeanUtils.copyProperties(product, newProduct);
-        return productRepository.save(newProduct);
+    public Product insertProduct(ProductDto product) {
+        Product productToInsert = new Product();
+        BeanUtils.copyProperties(product, productToInsert);
+        return productRepository.save(productToInsert);
     }
 
     @Transactional
-    public void deleteProduct(Product product) {
-        productRepository.delete(product);
-
+    public Product updateProduct(Long productId, ProductDto productDto) {
+        Product productToUpdate = findById(productId);
+        BeanUtils.copyProperties(productDto, productToUpdate);
+        return productRepository.save(productToUpdate);
     }
 
-    public Optional<Product> findById(Long id) {
-        return productRepository.findById(id);
+    @Transactional
+    public String deleteProduct(Long productId) {
+        Product productToDelete = findById(productId);
+        productRepository.delete(productToDelete);
+        return "Product with id " + productId + " was deleted successfully.";
+    }
+
+    public Product findById(Long productId) {
+        Optional<Product> productById = productRepository.findById(productId);
+        if (productById.isEmpty()) {
+            throw new EntityNotFoundException("Product with id  " + productId + " was not found.");
+        }
+        return productById.get();
     }
 }

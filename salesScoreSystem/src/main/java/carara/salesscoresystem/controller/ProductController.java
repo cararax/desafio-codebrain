@@ -1,16 +1,13 @@
 package carara.salesscoresystem.controller;
 
 import carara.salesscoresystem.dto.ProductDto;
-import carara.salesscoresystem.exception.EntityNotFoundException;
 import carara.salesscoresystem.model.Product;
 import carara.salesscoresystem.service.ProductService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
@@ -23,29 +20,17 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> insertProduct(@Valid @RequestBody Product product) {
+    public ResponseEntity<Product> insertProduct(@Valid @RequestBody ProductDto product) {
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.insertProduct(product));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDto productDto) {
-        Optional<Product> productToUpdate = productService.findById(id);
-        if (productToUpdate.isEmpty()) {
-            throw new EntityNotFoundException("Product with id  " + id + " was not found.");
-        }
-        Product product = productToUpdate.get();
-        BeanUtils.copyProperties(productDto, product);
-        product.setId(id);
-        return ResponseEntity.status(HttpStatus.OK).body(productService.insertProduct(product));
+    @PutMapping("/{productId}")
+    public ResponseEntity<Product> updateProduct(@PathVariable Long productId, @Valid @RequestBody ProductDto productDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(productService.updateProduct(productId, productDto));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
-        Optional<Product> productToDelete = productService.findById(id);
-        if (productToDelete.isEmpty()) {
-            throw new EntityNotFoundException("Product with id  " + id + " was not found.");
-        }
-        productService.deleteProduct(productToDelete.get());
-        return ResponseEntity.status(HttpStatus.OK).body("Product deleted successfully.");
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<String> deleteProduct(@PathVariable Long productId) {
+        return ResponseEntity.status(HttpStatus.OK).body(productService.deleteProduct(productId));
     }
 }
