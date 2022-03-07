@@ -2,6 +2,8 @@ package carara.salesscoresystem.service;
 
 import carara.salesscoresystem.dto.SaleDto;
 import carara.salesscoresystem.dto.TimeIntervalDto;
+import carara.salesscoresystem.exception.BusinessRuleException;
+import carara.salesscoresystem.exception.EntityNotFoundException;
 import carara.salesscoresystem.model.Product;
 import carara.salesscoresystem.model.Sale;
 import carara.salesscoresystem.model.Seller;
@@ -34,24 +36,34 @@ public class SaleService {
 
     @Transactional
     public SaleDto insertSale(SaleDto saleDto) {
-
-        Optional<Seller> seller = sellerRepository.findById(saleDto.getSeller().getId());
-        if (seller.isPresent()) {
-            saleDto.setSeller(seller.get());
+        if (saleDto.getSellerId() == null) {
+            throw new BusinessRuleException("It is not allowed to register a sale without a seller.");
         }
-        List<Product> productList = new ArrayList<>(saleDto.getProducts());
-        saleDto.getProducts().clear();
-        for (Product product : productList) {
-            Optional<Product> productOptional = productRepository.findById(product.getId());
-            if (productOptional.isPresent()) {
-                saleDto.getProducts().add(productOptional.get());
-            }
-        }
-        saleDto.setLocalDate(LocalDate.now());
 
+        Optional<Seller> seller = sellerRepository.findById(saleDto.getSellerId());
+        if (seller.isEmpty()) {
+            throw new EntityNotFoundException("Seller with id  " + saleDto.getSellerId() + " was not found.");
+        }
         Sale sale = new Sale();
-        saleDto.setTotalAmount(sale.calculateTotalAmount(saleDto.getProducts()));
-        BeanUtils.copyProperties(saleDto, sale);
+        sale.setSeller(seller.get());
+
+        if (saleDto.getProductId().isEmpty()) {
+            throw new BusinessRuleException("It is not allowed to register a sale without products");
+        }
+        List<Long> productList = new ArrayList<>(saleDto.getProductId());
+//        saleDto.getProducts().clear();
+        for (Long productId : productList) {
+            Optional<Product> productOptional = productRepository.findById(productId);
+            if (productOptional.isEmpty()) {
+                throw new EntityNotFoundException("Product with id  " + productId + " was not found.");
+            }
+            sale.getProducts().add(productOptional.get());
+        }
+
+        sale.setLocalDate(LocalDate.now());
+
+        sale.setTotalAmount(sale.calculateTotalAmount(sale.getProducts()));
+//        BeanUtils.copyProperties(saleDto, sale);
         BeanUtils.copyProperties(saleRepository.save(sale), saleDto);
         return saleDto;
     }
@@ -61,6 +73,13 @@ public class SaleService {
     }
 
     public SalesTicket getSalesTicketBySeller(Long sellerId, TimeIntervalDto timeIntervalDto) {
+        Optional<Seller> seller = sellerRepository.findById(sellerId);
+        if (seller.isEmpty()) {
+            throw new EntityNotFoundException("Seller with id  " + sellerId + " was not found.");
+        }
+        if (timeIntervalDto.getEndDate().isBefore(timeIntervalDto.getStartDate())) {
+            throw new BusinessRuleException("The start date must be before the end date");
+        }
         LocalDate startDate = timeIntervalDto.getStartDate();
         LocalDate endDate = timeIntervalDto.getEndDate();
         return saleRepository.salesTicketBySeller(sellerId, startDate, endDate);

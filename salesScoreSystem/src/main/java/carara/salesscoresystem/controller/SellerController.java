@@ -1,6 +1,7 @@
 package carara.salesscoresystem.controller;
 
 import carara.salesscoresystem.dto.ProductDto;
+import carara.salesscoresystem.exception.EntityNotFoundException;
 import carara.salesscoresystem.model.Seller;
 import carara.salesscoresystem.service.SellerService;
 import org.springframework.beans.BeanUtils;
@@ -25,7 +26,7 @@ public class SellerController {
     public ResponseEntity<Object> findById(@PathVariable Long id) {
         Optional<Seller> seller = sellerService.findById(id);
         if (seller.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Seller not found.");
+            throw new EntityNotFoundException("Seller with id  " + id + " was not found.");
         }
         return ResponseEntity.status(HttpStatus.OK).body(seller.get());
     }
@@ -39,7 +40,7 @@ public class SellerController {
     public ResponseEntity<Object> updateSeller(@PathVariable Long id, @Valid @RequestBody ProductDto productDto) {
         Optional<Seller> productToUpdate = sellerService.findById(id);
         if (productToUpdate.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Seller not found.");
+            throw new EntityNotFoundException("Seller with id  " + id + " was not found.");
         }
         Seller seller = productToUpdate.get();
         BeanUtils.copyProperties(productDto, seller);
@@ -51,7 +52,7 @@ public class SellerController {
     public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
         Optional<Seller> productToDelete = sellerService.findById(id);
         if (productToDelete.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Seller not found.");
+            throw new EntityNotFoundException("Seller with id  " + id + " was not found.");
         }
         sellerService.deleteSeller(productToDelete.get());
         return ResponseEntity.status(HttpStatus.OK).body("Seller deleted successfully.");
