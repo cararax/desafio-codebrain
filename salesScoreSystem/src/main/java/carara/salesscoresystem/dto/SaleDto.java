@@ -1,7 +1,5 @@
 package carara.salesscoresystem.dto;
 
-import carara.salesscoresystem.model.Product;
-import carara.salesscoresystem.model.Seller;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +9,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -19,9 +16,9 @@ import java.util.List;
 @AllArgsConstructor
 public class SaleDto implements Serializable {
     @NotNull
-    private Seller seller;
+    private Long sellerId;
     @NotEmpty
-    private List<Product> products = new ArrayList<>();
+    private List<Long> productId;
 
     private LocalDate localDate;
     @Positive
