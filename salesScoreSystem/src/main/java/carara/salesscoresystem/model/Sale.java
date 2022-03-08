@@ -40,7 +40,7 @@ public class Sale {
     @Positive
     private Double totalAmount = null;
 
-    public Double calculateTotalAmount(List<Product> products) {
+    public static Double calculateTotalAmount(List<Product> products) {
         Double total = 0.0;
         for (Product product : products) {
             total += product.getPrice();
