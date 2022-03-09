@@ -41,11 +41,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<Object> handleNoSuchElementFoundException(EntityNotFoundException itemNotFoundException,
                                                                     WebRequest request) {
         log.error("Failed to find the requested element", itemNotFoundException);
-        return buildErrorResponse(itemNotFoundException, HttpStatus.BAD_REQUEST, request);
+        return buildErrorResponse(itemNotFoundException, HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler(BusinessRuleException.class)

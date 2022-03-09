@@ -6,6 +6,7 @@ import carara.salesscoresystem.model.Seller;
 import carara.salesscoresystem.repository.ProductRepository;
 import carara.salesscoresystem.repository.SaleRepository;
 import carara.salesscoresystem.repository.SellerRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
+@Log4j2
 public class DataLoader implements CommandLineRunner {
 
 
@@ -84,7 +86,7 @@ public class DataLoader implements CommandLineRunner {
             saleRepository.saveAll(saleList);
         }
 
-
+        log.info("Database successfully populated");
     }
 
     public void removeFirstElement(List<Product> productList) {
