@@ -65,6 +65,10 @@ Check the documentation at http://localhost:8080/api/swagger-ui/index.html
 ---
 
 ### Run locally
+**Requirements**
+- Java 11
+- Maven
+- Docker
 
 1. Clone the project and access the repository folder:
 
