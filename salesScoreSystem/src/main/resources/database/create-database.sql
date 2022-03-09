@@ -27,7 +27,7 @@ create table if not exists sale
 (
     id           bigint not null
         primary key,
-    local_date   date,
+    sale_date    date   not null,
     total_amount double precision,
     seller_id    bigint not null
         constraint fkqo5yb2opubvktdxvya06qctjs
