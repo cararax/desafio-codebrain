@@ -12,6 +12,7 @@ import carara.salesscoresystem.projection.SalesTicket;
 import carara.salesscoresystem.repository.ProductRepository;
 import carara.salesscoresystem.repository.SaleRepository;
 import carara.salesscoresystem.repository.SellerRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Log4j2
 public class SaleService {
 
     public final SaleRepository saleRepository;
@@ -40,6 +42,7 @@ public class SaleService {
 
     @Transactional
     public Sale insertSale(SaleDto saleDto) {
+        log.info("Requested method SaleService.insertSale()");
         if (saleDto.getSellerId() == null) {
             throw new BusinessRuleException("It is not allowed to register a sale without a seller.");
         }
@@ -64,10 +67,13 @@ public class SaleService {
     }
 
     public List<SalesAmountBySeller> getSalesAmountBySellers() {
+        log.info("Requested method SaleService.getSalesAmountBySellers()");
+
         return saleRepository.countSalesBySellers();
     }
 
     public SalesTicket getSalesTicketBySeller(Long sellerId, TimeIntervalDto timeIntervalDto) {
+        log.info("Requested method SaleService.getSalesTicketBySeller(sellerId:" + sellerId + ", startDate: " + timeIntervalDto.getStartDate() + ", endDate: " + timeIntervalDto.getEndDate() + ")");
         Optional<Seller> seller = sellerRepository.findById(sellerId);
         if (seller.isEmpty()) {
             throw new EntityNotFoundException("Seller with id  " + sellerId + " was not found.");
