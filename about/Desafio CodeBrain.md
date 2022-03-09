@@ -39,7 +39,7 @@
 
 - [x] Deve conter scripts para criação do banco caso a aplicação não crie as tabelas automaticamente.
 
-- [ ] Deve conter as instruções para subir um container docker com o(s) banco(s) escolhido(s).
+- [x] Deve conter as instruções para subir um container docker com o(s) banco(s) escolhido(s).
 
   
 
@@ -47,8 +47,8 @@
 
  O que o cliente precisa de receber:
 
-- [ ] Um repositório privado do github com o código fonte, as instruções de como executar o
-   sistema e exemplos de chamadas para a API.
+- [x] Um repositório privado do github com o código fonte, as instruções de como executar o sistema e exemplos de
+  chamadas para a API.
 
 
 
@@ -79,7 +79,3 @@
 ●  Qualidade de código
 ●  Testes
 ●  etc
-
- 
-
-​               
