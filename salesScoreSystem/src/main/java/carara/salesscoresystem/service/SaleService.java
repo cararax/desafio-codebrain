@@ -53,7 +53,7 @@ public class SaleService {
         Seller seller = sellerService.findById(saleDto.getSellerId());
         sale.setSeller(seller);
         populateProducts(saleDto, sale);
-        sale.setLocalDate(LocalDate.now());
+        sale.setSaleDate(LocalDate.now());
         sale.setTotalAmount(Sale.calculateTotalAmount(sale.getProducts()));
         return saleRepository.save(sale);
     }
