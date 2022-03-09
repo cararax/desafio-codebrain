@@ -15,7 +15,7 @@ services:
   postgresDB:
     image: postgres:alpine
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       - POSTGRES_DB=salesScore
       - POSTGRES_PASSWORD=password
