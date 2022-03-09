@@ -36,7 +36,7 @@ public class Sale {
     @NotEmpty
     private List<Product> products = new ArrayList<>();
     @NotNull
-    private LocalDate localDate;
+    private LocalDate saleDate;
     @Positive
     private Double totalAmount = null;
 
