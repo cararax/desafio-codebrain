@@ -15,12 +15,12 @@ Sales Score System
 
 <a id="about-the-project"></a>
 
-Sales Score System is an API responsible for managing a company's products, vendors and sales. In the system you can:
+Sales Score System is an API responsible for managing a company's products, sellers and sales. In the system you can:
 
-- Create, update and delete products
-- Create, update, delete e get sellers by id,
+- Create, update and delete products;
+- Create, update, delete e get sellers by id;
 - Create sales, as well as consult the sellers with the highest number of sales and consult the average sales ticket of
-  a seller by time interval
+  a seller by time interval.
 
 ## 🚀 Technologies used
 
@@ -41,6 +41,7 @@ Sales Score System is an API responsible for managing a company's products, vend
 ## 💻 How to run de project
 
 <a id="how-to-run"></a>
+### On Docker containers
 
 1. Clone the project and access the repository folder:
 
@@ -61,6 +62,46 @@ The application will be running at http://localhost:8080/
 
 Check the documentation at http://localhost:8080/api/swagger-ui/index.html
 
+---
+
+### Run locally
+
+1. Clone the project and access the repository folder:
+
+```bash
+git clone https://github.com/cararax/desafio-codebrain && cd desafio-codebrain
+```
+
+2. Create a container for the database:
+
+```bash
+docker run --name salesScoreService -e POSTGRES_PASSWORD=password -e POSTGRES_DB=salesScoreService -p 5432:5432 -d postgres:alpine
+```
+This command will build and run the database on a docker container
+
+3. Set application profile to dev:
+
+Change the application.properties file to:
+
+```properties
+spring.profiles.active=dev
+```
+
+4. Run the application
+
+On SalesScoreSystem folder run the command:
+```bash
+mvn spring-boot:run
+```
+
+This command will run the application locally with a database container. The application will automatically create the tables and populate the database.
+
+The application will be running at http://localhost:8080/
+
+Check the documentation at http://localhost:8080/api/swagger-ui/index.html
+
+---
+
 ## 📄 Examples of API requests
 
 <a id="example-requests"></a>
@@ -75,16 +116,16 @@ Check the documentation at http://localhost:8080/api/swagger-ui/index.html
 
 ### Sellers
 
-| Method | Url               | Description                                                                | Sample Valid Request Body |
+| Method | Url               | Description                                                                | Sample requests |
 |--------|-------------------|----------------------------------------------------------------------------|---------------------------|
-| GET    | /api/sellers/{id} | Get seller by id                                                           |                           |
+| GET    | /api/sellers/{sellerId} | Get seller by id                                                           |                           |
 | POST   | /api/sellers      | Create seller                                                              | [Request](#create-seller) |
-| PUT    | /api/sellers/{id} | Update seller                                                              | [Request](#update-seller) |
-| DELETE | /api/sellers/{id} | Delete seller  |                           |
+| PUT    | /api/sellers/{sellerId} | Update seller                                                              | [Request](#update-seller) |
+| DELETE | /api/sellers/{sellerId} | Delete seller  |                           |
 
 ### Sales
 
-| Method | Uri                                | Description                                           | Request body example     |
+| Method | Uri                                | Description                                           | Sample requests     |
 |--------|------------------------------------|-------------------------------------------------------|--------------------------|
 | GET    | /api/sales/sales-by-seller         | Get list of sellers with the highest number of sales  |                          |
 | GET    | /api/sales/sales-ticket/{sellerId} | Get average sales ticket of a seller by time interval | [Request](#sales-ticket) |
@@ -170,4 +211,4 @@ Check the documentation at http://localhost:8080/api/swagger-ui/index.html
 
 <br><br>
 ---
-Made with ☕ by **Pedro Carara**
+Made with ☕ and 💖 by **Pedro Carara**
